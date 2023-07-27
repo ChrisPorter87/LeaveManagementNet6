@@ -1,14 +1,23 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-#nullable disable
-
 namespace LeaveManagement.Web.Data.Migrations
 {
-    public partial class AddedLeaveTables : Migration
+    public partial class Whatever : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AddColumn<string>(
+                name: "Firstname",
+                table: "AspNetUsers",
+                type: "nvarchar(max)",
+                nullable: true);
+
+            // Remove the duplicate 'TaxId' column
+            migrationBuilder.DropColumn(
+                name: "TaxId",
+                table: "AspNetUsers");
+
             migrationBuilder.CreateTable(
                 name: "LeaveTypes",
                 columns: table => new
@@ -45,7 +54,7 @@ namespace LeaveManagement.Web.Data.Migrations
                         column: x => x.LeaveTypeId,
                         principalTable: "LeaveTypes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -61,6 +70,17 @@ namespace LeaveManagement.Web.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "LeaveTypes");
+
+            // Remove the duplicate 'TaxId' column
+            migrationBuilder.DropColumn(
+                name: "Firstname",
+                table: "AspNetUsers");
+
+            migrationBuilder.AddColumn<string>(
+                name: "TaxId",
+                table: "AspNetUsers",
+                type: "nvarchar(max)",
+                nullable: true);
         }
     }
 }
